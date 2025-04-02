@@ -14,11 +14,19 @@ namespace CinemaArchiveAPI
     // RESTful API’lerde kebab-case formatý tercih edilir. Aþaðýdaki Kod satýrý ise URL’deki parametreleri kebab-case formatýna çevirir.
     public sealed class SlugifyParameterTransformer : IOutboundParameterTransformer
     {
-        public string TransformOutbound(object? value)
+        public string? TransformOutbound(object? value)
         {
-            if (value == null) return null;
+            if (value == null)
+            {
+                return null;
+            }
+
             string? str = value.ToString();
-            if (string.IsNullOrEmpty(str)) return null;
+
+            if (string.IsNullOrEmpty(str)) 
+            {
+                return null;
+            } 
             return Regex.Replace(str, "([a-z])([A-Z])", "$1-$2").ToLower();
         }
     }
@@ -69,7 +77,7 @@ namespace CinemaArchiveAPI
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-
+            
 
             var app = builder.Build();
 
@@ -84,7 +92,7 @@ namespace CinemaArchiveAPI
 
             app.UseAuthorization();
 
-
+            
             app.MapControllers();
 
             app.Run();
